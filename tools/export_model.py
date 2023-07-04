@@ -26,7 +26,7 @@ from paddle.jit import to_static
 
 from ppocr.modeling.architectures import build_model
 from ppocr.postprocess import build_post_process
-from ppocr.utils.save_load import load_dygraph_params
+from ppocr.utils.save_load import init_model
 from ppocr.utils.logging import get_logger
 from tools.program import load_config, merge_config, ArgsParser
 
@@ -101,7 +101,7 @@ def main():
         else:  # base rec model
             config["Architecture"]["Head"]["out_channels"] = char_num
     model = build_model(config["Architecture"])
-    _ = load_dygraph_params(config, model, logger, None)
+    init_model(config, model)
     model.eval()
 
     save_path = config["Global"]["save_inference_dir"]
